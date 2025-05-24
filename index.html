@@ -1,42 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Editor Markdown</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body class="flex flex-col h-screen">
-
-  <header class="bg-gray-800 text-white p-4 text-center fixed w-full md:top-0 bottom-0 md:bottom-auto z-10">
-    <div class="flex justify-between items-center">
-      <h1 class="text-lg font-bold">Editor Markdown</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown Editor</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script type="module" src="js/format.js"></script>
+    <script type="module" src="js/lists.js"></script>
+    <script type="module" src="js/blocks.js"></script>
+    <script type="module" src="js/app.js"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <header
+      class="fixed w-full bg-white shadow-md p-4 flex justify-between items-center z-10 top-0"
+    >
+      <h1 class="text-2xl font-bold">Markdown Editor</h1>
       <div>
-        <button id="previewBtn" class="bg-green-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+        <button
+          id="previewBtn"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+        >
           Generar Vista Previa
         </button>
-        <button id="contrastBtn" class="bg-blue-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded ml-2">
+        <button
+          id="contrastBtn"
+          class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded ml-2"
+        >
           Contrastar Encabezados
         </button>
+        <button
+          id="formatBtn"
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded ml-2"
+        >
+          Aplicar Formato
+        </button>
       </div>
-    </div>
-  </header>
-
-  <main class="flex flex-1 pt-20 md:pt-16 p-4 overflow-hidden">
-    <div class="w-1/2 pr-2 flex flex-col">
-      <textarea id="editor" class="flex-1 p-2 border border-gray-300 rounded resize-none overflow-auto"></textarea>
-      <div class="text-right text-sm text-gray-600 mt-2">
-        <span id="wordCount">0 palabras</span> • <span id="charCount">0 caracteres</span>
-      </div>
-    </div>
-    <div id="preview" class="w-1/2 p-2 border border-gray-300 rounded overflow-auto bg-gray-50"></div>
-  </main>
-
-  <footer class="bg-gray-200 text-center p-2 text-sm">
-    &copy; 2025 - Markdown Editor
-  </footer>
-
-  <script src="js/app.js"></script>
-</body>
+    </header>
+    <main class="pt-24 px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <section>
+        <h2 class="text-xl font-semibold mb-2">Editor</h2>
+        <textarea
+          id="editor"
+          class="w-full h-96 p-2 border rounded resize-none"
+        ></textarea>
+        <div class="mt-2 text-sm text-gray-600">
+          <span id="wordCount">0 palabras</span> |
+          <span id="charCount">0 caracteres</span>
+        </div>
+      </section>
+      <section>
+        <h2 class="text-xl font-semibold mb-2">Vista Previa</h2>
+        <div
+          id="preview"
+          class="w-full h-96 overflow-auto bg-white p-4 border rounded"
+        ></div>
+      </section>
+    </main>
+    <footer class="p-4 text-center text-gray-500 text-sm">
+      © 2025 - Markdown Editor
+    </footer>
+  </body>
 </html>
