@@ -1,0 +1,24 @@
+/* Personalización si es necesario */
+#editor,
+#preview {
+  height: calc(100vh - 8rem);
+}
+
+#wordCount {
+  font-size: 14px;
+  color: blue;
+  font-weight: bold;
+  border: solid 1px black;
+  border-radius: 10px;
+  background-color: gray;
+  margin-left: 20px;
+}
+
+#charCount {
+  font-size: 14px;
+  color: blue;
+  font-weight: bold;
+  border: solid 1px black;
+  border-radius: 10px;
+  background-color: gray;
+}
