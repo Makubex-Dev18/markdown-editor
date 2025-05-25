@@ -12,6 +12,35 @@ const charCount = document.getElementById('charCount');
 
 let contrastApplied = false;
 
+// Función para procesar el markdown y actualizar el preview
+function updatePreview() {
+  let markdown = editor.value;
+
+  let html = markdown
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    .replace(/^\* (.*$)/gim, '<ul><li>$1</li></ul>')
+    .replace(/<\/ul>\n<ul>/gim, '');
+
+  html = processOrderedLists(html);     // Listas ordenadas
+  html = highlightCodeBlocks(html);     // Código con triple backticks
+
+  preview.innerHTML = html;
+}
+
+// Función para actualizar el contador
+function updateCounter() {
+  const text = editor.value.trim();
+  const words = text === '' ? 0 : text.split(/\s+/).length;
+  const chars = text.length;
+
+  wordCount.textContent = `${words} ${words === 1 ? 'palabra' : 'palabras'}`;
+  charCount.textContent = `${chars} ${chars === 1 ? 'carácter' : 'caracteres'}`;
+}
+
+
+
 previewBtn.addEventListener('click', () => {
   let markdown = editor.value;
 
@@ -58,3 +87,11 @@ editor.addEventListener('input', () => {
   charCount.textContent = `${chars} ${chars === 1 ? 'carácter' : 'caracteres'}`;
 });
 
+
+// Botón para limpiar contenido
+clearBtn.addEventListener('click', () => {
+  editor.value = '';
+  preview.innerHTML = '';
+  wordCount.textContent = '0 palabras';
+  charCount.textContent = '0 caracteres';
+});
