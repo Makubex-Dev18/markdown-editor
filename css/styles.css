@@ -1,7 +1,13 @@
-/* Personalización si es necesario */
+
+main{
+font-size: 20px;
+}
+
 #editor,
 #preview {
   height: calc(100vh - 8rem);
+  border: 2px solid  black;
+
 }
 
 #wordCount {

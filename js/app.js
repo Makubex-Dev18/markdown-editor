@@ -13,6 +13,31 @@ const charCount = document.getElementById('charCount');
 const errorMessage = document.getElementById('errorMessage');
 
 let contrastApplied = false;
+let isReadOnlyMode = false;
+const MAX_CHARS = 1000;
+
+// Crear botón para modo lectura
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleReadModeBtn = document.createElement('button');
+  toggleReadModeBtn.id = 'readModeBtn';
+  toggleReadModeBtn.textContent = 'Activar Modo Lectura';
+  toggleReadModeBtn.className =
+    'bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded ml-2';
+  document.querySelector('header div').appendChild(toggleReadModeBtn);
+
+  toggleReadModeBtn.addEventListener('click', () => {
+    isReadOnlyMode = !isReadOnlyMode;
+    editor.disabled = isReadOnlyMode;
+    toggleReadModeBtn.textContent = isReadOnlyMode
+      ? 'Desactivar Modo Lectura'
+      : 'Activar Modo Lectura';
+    alert(
+      isReadOnlyMode
+        ? 'Modo lectura activado: ya no puedes editar el contenido.'
+        : 'Modo lectura desactivado: puedes volver a editar el contenido.'
+    );
+  });
+});
 
 function updatePreview() {
   try {
@@ -20,11 +45,16 @@ function updatePreview() {
     const markdown = editor.value.trim();
     if (!markdown) throw new Error('No se ingresó contenido.');
 
-    // Validación de sintaxis Markdown mal formada
+    if (markdown.length > MAX_CHARS) {
+      throw new Error(`El texto excede el límite de ${MAX_CHARS} caracteres.`);
+    }
+
     const invalidHeader = /##[^#\s]/.test(markdown);
     const invalidList = /(^|\n)-[^\s]/.test(markdown);
-    if (invalidHeader) throw new Error('Encabezado mal formado. Use espacio después de #.');
-    if (invalidList) throw new Error('Elemento de lista mal formado. Use espacio después de -.');
+    if (invalidHeader)
+      throw new Error('Encabezado mal formado. Use espacio después de #.');
+    if (invalidList)
+      throw new Error('Elemento de lista mal formado. Use espacio después de -.');
 
     let html = markdown
       .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -46,11 +76,17 @@ function updatePreview() {
 previewBtn.addEventListener('click', updatePreview);
 
 editor.addEventListener('input', () => {
+  if (editor.value.length > MAX_CHARS) {
+    editor.value = editor.value.substring(0, MAX_CHARS);
+    alert(`Has alcanzado el límite máximo de ${MAX_CHARS} caracteres.`);
+  }
+
   const text = editor.value.trim();
   const words = text === '' ? 0 : text.split(/\s+/).length;
   const chars = text.length;
   wordCount.textContent = `${words} ${words === 1 ? 'palabra' : 'palabras'}`;
   charCount.textContent = `${chars} ${chars === 1 ? 'carácter' : 'caracteres'}`;
+
   updatePreview();
 });
 
@@ -74,3 +110,5 @@ contrastBtn.addEventListener('click', () => {
   });
   contrastApplied = !contrastApplied;
 });
+
+
